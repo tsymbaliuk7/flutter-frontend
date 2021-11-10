@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube/models/video_model.dart';
 
 class WatchedVideo extends StatelessWidget{
-  final String title;
-  final String chanel;
-  final String imageLink;
+  final VideoModel videoModel;
    
-   const WatchedVideo({Key? key, required this.title, required this.chanel, required this.imageLink}) : super(key: key);
+  const WatchedVideo({Key? key, required this.videoModel}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -18,13 +17,13 @@ class WatchedVideo extends StatelessWidget{
         children: [
           Row(
             children: [
-              Expanded(child: Image.network(imageLink),
+              Expanded(child: Image.network(videoModel.imageLink),
                )
             ],
           ),
           Container(
             margin: const EdgeInsets.only(top: 8),
-            child: Text(title,
+            child: Text(videoModel.title,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -36,7 +35,7 @@ class WatchedVideo extends StatelessWidget{
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 2),
-            child: Text(chanel,
+            child: Text(videoModel.chanel,
             style: TextStyle(
               fontSize: 13,
               color: Colors.grey[700]

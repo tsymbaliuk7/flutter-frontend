@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube/models/video_model.dart';
 import 'package:youtube/widgets/video.dart';
 import 'package:youtube/widgets/navbar.dart';
 import 'package:youtube/widgets/grey_button.dart';
@@ -8,6 +9,22 @@ import 'package:youtube/widgets/grey_button.dart';
 class HomePage extends StatelessWidget{
   final Function addFunction;
   final List<GreyButton> buttonList = const <GreyButton>[GreyButton(text: 'Все'), GreyButton(text: 'Скетч-шоу'), GreyButton(text: 'Рэп'), GreyButton(text: 'Мультфильмы'), GreyButton(text: 'Футбол')];
+  final List<VideoModel> modelsList = const <VideoModel>[
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing1', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/YPRaA6KhyXc/maxresdefault.jpg', views: 10, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing2', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/LXITSJ1bCYc/maxresdefault.jpg', views: 20, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing3', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/xhbLwKQvIpw/maxresdefault.jpg', views: 30, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing4', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/zw1V5T6q048/maxresdefault.jpg', views: 40, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing5', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/ocxDfVk32Bs/maxresdefault.jpg', views: 50, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing6', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/pTJJsmejUOQ/maxresdefault.jpg', views: 60, length: '10:20'),
+              VideoModel(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing7', 
+              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/1gDhl4leEzA/maxresdefault.jpg', views: 70, length: '10:20'),
+  ];
 
   HomePage({Key? key, required this.addFunction}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -16,22 +33,7 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    List<YoutubeVideo> videoList= <YoutubeVideo>[
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing1', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/YPRaA6KhyXc/maxresdefault.jpg', views: 10, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing2', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/LXITSJ1bCYc/maxresdefault.jpg', views: 20, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing3', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/xhbLwKQvIpw/maxresdefault.jpg', views: 30, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing4', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/zw1V5T6q048/maxresdefault.jpg', views: 40, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing5', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/ocxDfVk32Bs/maxresdefault.jpg', views: 50, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing6', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/pTJJsmejUOQ/maxresdefault.jpg', views: 60, length: '10:20', addFunction: addFunction),
-              YoutubeVideo(title: 'Lorem ipsum dolor sit amet, consectetur adipiscing7', 
-              chanel: 'Lorem ipsum', imageLink: 'http://i3.ytimg.com/vi/1gDhl4leEzA/maxresdefault.jpg', views: 70, length: '10:20', addFunction: addFunction),
-            ];
+    List<YoutubeVideo> videoList= modelsList.map((e) => YoutubeVideo(videoModel: e, addFunction: addFunction,)).toList();
     
     return Scaffold(
         key: _scaffoldKey,

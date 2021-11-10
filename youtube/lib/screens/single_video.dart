@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube/models/liked.dart';
+import 'package:youtube/models/video_model.dart';
 import 'package:youtube/widgets/liked_video.dart';
 
 class SingleVideo extends StatelessWidget{
-  final String title;
-  final int views;
-  final String chanel;
-  final String imageLink;
+  final VideoModel videoModel;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  SingleVideo({Key? key, required this.title, required this.chanel, required this.imageLink, 
-                      required this.views}) : super(key: key);
+  SingleVideo({Key? key, required this.videoModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,7 @@ class SingleVideo extends StatelessWidget{
                     margin: const EdgeInsets.only(bottom: 10),
                     child: Row(children: [
                         Expanded(
-                          child: Image.network(imageLink),
+                          child: Image.network(videoModel.imageLink),
                         ),
                       ],
                     ),
@@ -46,7 +43,7 @@ class SingleVideo extends StatelessWidget{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                title,
+                                videoModel.title,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
@@ -55,7 +52,7 @@ class SingleVideo extends StatelessWidget{
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 5),
-                                child: Text('$views просмотров · 4 года назад',
+                                child: Text('${videoModel.views} просмотров · 4 года назад',
                                   style: TextStyle(
                                     color: Colors.grey[700],
                                     fontSize: 12
@@ -85,7 +82,7 @@ class SingleVideo extends StatelessWidget{
                       icon: const Icon(Icons.thumb_up_outlined),
                       onPressed: (){
                         var model = Provider.of<LikedModel>(context, listen: false);
-                        model.addLiked(LikedVideo(title: title, chanel: chanel, imageLink: imageLink));
+                        model.addLiked(videoModel);
                       },
                     ),
                   ),
@@ -121,7 +118,7 @@ class SingleVideo extends StatelessWidget{
                                       Padding(
                                         padding: const EdgeInsets.only(bottom: 5.0),
                                         child: Text(
-                                          chanel,
+                                          videoModel.chanel,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15

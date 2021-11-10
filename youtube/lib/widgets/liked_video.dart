@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube/models/video_model.dart';
 
 class LikedVideo extends StatelessWidget{
-  final String title;
-  final String chanel;
-  final String imageLink;
+  final VideoModel videoModel;
    
-   const LikedVideo({Key? key, required this.title, required this.chanel, required this.imageLink}) : super(key: key);
+  const LikedVideo({Key? key, required this.videoModel}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class LikedVideo extends StatelessWidget{
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.network(imageLink),
+          Image.network(videoModel.imageLink),
           Expanded(child: 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -24,7 +23,7 @@ class LikedVideo extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(title,
+                Text(videoModel.title,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
@@ -35,7 +34,7 @@ class LikedVideo extends StatelessWidget{
                 ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(chanel,
+                child: Text(videoModel.chanel,
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.grey[700]

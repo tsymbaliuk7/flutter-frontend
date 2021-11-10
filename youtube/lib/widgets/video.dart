@@ -1,29 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube/screens/single_video.dart';
+import 'package:youtube/models/video_model.dart';
 
 class YoutubeVideo extends StatelessWidget {
-  final String title;
-  final int views;
-  final String chanel;
-  final String imageLink;
-  final String length;
+  final VideoModel videoModel;
   final Function addFunction;
 
-  const YoutubeVideo({Key? key, required this.title, required this.chanel, required this.imageLink, 
-                      required this.views, required this.length, required this.addFunction}) : super(key: key);
-
-  List get mainVideoData => [title, imageLink, chanel];
+  const YoutubeVideo({Key? key, required this.videoModel, required this.addFunction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap:  () {
-        addFunction(this);
+        addFunction(videoModel);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SingleVideo(title: title, 
-              chanel: chanel, imageLink: imageLink, views: views)));
+          MaterialPageRoute(builder: (context) => SingleVideo(videoModel: videoModel)));
       },
       child: Container(
                 margin: const EdgeInsets.only(bottom: 20),
@@ -34,12 +27,12 @@ class YoutubeVideo extends StatelessWidget {
                       child: Row(children: [
                           Expanded(child: 
                           Stack(children: [
-                            Image.network(imageLink),
+                            Image.network(videoModel.imageLink),
                             Positioned(child: 
                               Container(
                                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                                 child: Text(
-                                  length,
+                                  videoModel.length,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w600,
@@ -79,7 +72,7 @@ class YoutubeVideo extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  title,
+                                  videoModel.title,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14
@@ -87,7 +80,7 @@ class YoutubeVideo extends StatelessWidget {
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 5),
-                                  child: Text('$chanel · $views просмотров · 4 года назад',
+                                  child: Text('${videoModel.chanel} · ${videoModel.views} просмотров · 4 года назад',
                                     style: TextStyle(
                                       color: Colors.grey[700],
                                       fontSize: 12

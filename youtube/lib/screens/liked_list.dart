@@ -44,7 +44,7 @@ class LikedPage extends StatelessWidget{
                         style: const TextStyle(fontSize: 14),
                       ),
                     ),
-                    ...liked.liked
+                    ...liked.likedVideoWidgets
                   ]
                 );
               },
