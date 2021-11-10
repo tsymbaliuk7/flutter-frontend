@@ -15,9 +15,6 @@ class LikedPage extends StatelessWidget{
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 5),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               height: 60,
               child: Column(
                 children: const[

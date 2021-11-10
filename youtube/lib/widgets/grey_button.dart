@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube/models/theme_model.dart';
 
 class GreyButton extends StatefulWidget{
   final String text;
@@ -28,7 +30,7 @@ class _GreyButtonState extends State<GreyButton>{
       onTap: toggleStyle,
       child: Container(
             decoration: BoxDecoration(
-            color: Colors.grey[_isPressed ? 700: 200],
+            color: !Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey[_isPressed ? 700 : 200] : Colors.grey[_isPressed ? 200 : 700],
             borderRadius: BorderRadius.circular(20),
             border: !_isPressed ? Border.all(color: Colors.grey[300] ?? Colors.grey, width: 1, style: BorderStyle.solid) : null
             ),
@@ -38,7 +40,7 @@ class _GreyButtonState extends State<GreyButton>{
               children: [
                 Text(
                   widget.text,
-                  style: TextStyle(color: _isPressed ? Colors.white : Colors.black),
+                  style: !Provider.of<ThemeModel>(context, listen: false).isDark ? TextStyle(color: _isPressed ? Colors.white : Colors.black) : TextStyle(color: _isPressed ? Colors.black : Colors.white),
                 )
                         
           ],

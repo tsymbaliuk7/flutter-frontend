@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
 import 'package:youtube/widgets/video.dart';
 import 'package:youtube/widgets/navbar.dart';
@@ -39,11 +41,7 @@ class HomePage extends StatelessWidget{
         key: _scaffoldKey,
         body: ListView(
           children: [
-            Container(
-              
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
+            SizedBox(
               height: 100,
               child: Column(
                 children: [
@@ -58,7 +56,7 @@ class HomePage extends StatelessWidget{
                             scrollDirection: Axis.horizontal,
                             children: [
                               Container(
-                                decoration: BoxDecoration(color: Colors.grey[200]),
+                                decoration: BoxDecoration(color: Colors.grey[Provider.of<ThemeModel>(context, listen: false).isDark ? 700 : 200]),
                                 margin: const EdgeInsets.only(left: 20),
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: Row(

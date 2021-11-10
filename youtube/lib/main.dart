@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/screens/library.dart';
 import 'models/video_model.dart';
 import 'screens/home.dart';
@@ -6,9 +7,10 @@ import 'package:youtube/widgets/watched_video.dart';
 import 'package:provider/provider.dart';
 import 'models/liked.dart';
 
-void main() => runApp(ChangeNotifierProvider(
+void main() => runApp(MultiProvider(
   child: const MyApp(),
-  create: (context) => LikedModel(),
+  providers: [ChangeNotifierProvider(create: (context) => LikedModel()),
+  ChangeNotifierProvider(create: (context) => ThemeModel())],
 ));
 
 
@@ -34,13 +36,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: '/',
-      routes: {
-          '/': (context) => HomePage(addFunction: addWatchedVideo),
-          '/library': (context) => LibraryPage(watchedVideo: watchedVideo),
-        },
-    );
+    return Consumer(builder: (context, ThemeModel themeNotifier, child) {
+      return MaterialApp(
+        theme: themeNotifier.isDark ? ThemeData.dark() : ThemeData.light(),
+        initialRoute: '/',
+        routes: {
+            '/': (context) => HomePage(addFunction: addWatchedVideo),
+            '/library': (context) => LibraryPage(watchedVideo: watchedVideo),
+          },
+      );
+    });
   }
 }

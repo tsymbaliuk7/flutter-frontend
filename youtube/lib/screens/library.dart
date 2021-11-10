@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube/models/liked.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/widgets/navbar.dart';
 import 'package:youtube/widgets/watched_video.dart';
 import 'package:youtube/screens/liked_list.dart';
@@ -17,13 +18,11 @@ class LibraryPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body: ListView(
+        body: Consumer(builder: (context, ThemeModel theme, child){
+                        return ListView(
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 5),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
               height: 60,
               child: Column(
                 children: const[
@@ -75,6 +74,59 @@ class LibraryPage extends StatelessWidget{
                   ]
                 ),
 
+
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  margin: const EdgeInsets.only(top: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          primary: !theme.isDark ? Colors.black : Colors.white
+                        ),
+                        onPressed: () => {
+                          theme.isDark
+                          ? theme.isDarkTheme = false
+                          : theme.isDarkTheme = true
+                        },
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.only(right: 10),
+                              width: 50,
+                              height: 50,
+                              child: Center(child: Icon(theme.isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined),),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 Text(theme.isDark ? 'Темная тема' : "Светлая тема",
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+
+                    ],
+                  ),
+                ),
+
+
+
+                Row(
+                  children:  <Widget>[
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey[400],
+                    )
+                  ),
+                  ]
+                ),
+
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   margin: const EdgeInsets.only(top: 10),
@@ -89,7 +141,7 @@ class LibraryPage extends StatelessWidget{
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.black
+                          primary: !theme.isDark ? Colors.black : Colors.white
                         ),
                         onPressed: () => {
                           Navigator.push(
@@ -115,7 +167,7 @@ class LibraryPage extends StatelessWidget{
                                 Text('${Provider.of<LikedModel>(context, listen: false).length} видео',
                                 style: TextStyle(
                                   fontSize: 13,
-                                  color: Colors.grey[700]
+                                  color: theme.isDark ? Colors.grey : Colors.grey[700]
                                 ),
                                 )
                               ],
@@ -129,7 +181,8 @@ class LibraryPage extends StatelessWidget{
               ],
             )
           ],
-        ),
+        );
+        }),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
           child: Container(

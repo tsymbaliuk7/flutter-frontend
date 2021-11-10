@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/screens/single_video.dart';
 import 'package:youtube/models/video_model.dart';
 
@@ -82,7 +84,7 @@ class YoutubeVideo extends StatelessWidget {
                                   margin: const EdgeInsets.only(top: 5),
                                   child: Text('${videoModel.chanel} · ${videoModel.views} просмотров · 4 года назад',
                                     style: TextStyle(
-                                      color: Colors.grey[700],
+                                      color: Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey : Colors.grey[700],
                                       fontSize: 12
                                     ),
                                   ),

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
 
 class LikedVideo extends StatelessWidget{
@@ -37,7 +39,7 @@ class LikedVideo extends StatelessWidget{
                 child: Text(videoModel.chanel,
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.grey[700]
+                  color: Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey : Colors.grey[700]
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

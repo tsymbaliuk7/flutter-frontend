@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube/models/liked.dart';
+import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
-import 'package:youtube/widgets/liked_video.dart';
+
 
 class SingleVideo extends StatelessWidget{
   final VideoModel videoModel;
@@ -54,7 +55,7 @@ class SingleVideo extends StatelessWidget{
                                 margin: const EdgeInsets.only(top: 5),
                                 child: Text('${videoModel.views} просмотров · 4 года назад',
                                   style: TextStyle(
-                                    color: Colors.grey[700],
+                                    color: Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey : Colors.grey[700],
                                     fontSize: 12
                                   ),
                                 ),
@@ -127,7 +128,7 @@ class SingleVideo extends StatelessWidget{
                                       ),
                                       Text('99 млн подписчиков',
                                       style: TextStyle(
-                                      color: Colors.grey[700],
+                                      color: Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey : Colors.grey[700],
                                       fontSize: 12
                                     ),
                                   ),
