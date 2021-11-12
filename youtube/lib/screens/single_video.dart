@@ -5,11 +5,42 @@ import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
 
 
-class SingleVideo extends StatelessWidget{
+class SingleVideo extends StatefulWidget{
   final VideoModel videoModel;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
-  SingleVideo({Key? key, required this.videoModel}) : super(key: key);
+
+  const SingleVideo({Key? key, required this.videoModel}) : super(key: key);
+
+  @override
+  State<SingleVideo> createState() => _SingleVideoState();
+}
+
+class _SingleVideoState extends State<SingleVideo> with TickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  late AnimationController controller;
+  late Animation<double> curve;
+
+  
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(duration: const Duration(seconds: 10), vsync: this);
+    curve = CurvedAnimation(parent: controller, curve: Curves.linear)
+            ..addStatusListener((status) {
+                if (status == AnimationStatus.completed) {
+                  controller.reverse();
+                } else if (status == AnimationStatus.dismissed) {
+                  controller.forward();
+                }
+              });
+    controller.forward();
+  }
+  
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +59,14 @@ class SingleVideo extends StatelessWidget{
                     margin: const EdgeInsets.only(bottom: 10),
                     child: Row(children: [
                         Expanded(
-                          child: Image.network(videoModel.imageLink),
+                          child: Stack(children: [
+                            Image.network(widget.videoModel.imageLink),
+                            Positioned(
+                              child: RedLine(animation: curve,),
+                              bottom: 0,
+                              left: 0,
+                              )
+                            ]),
                         ),
                       ],
                     ),
@@ -44,7 +82,7 @@ class SingleVideo extends StatelessWidget{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                videoModel.title,
+                                widget.videoModel.title,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
@@ -53,7 +91,7 @@ class SingleVideo extends StatelessWidget{
                               ),
                               Container(
                                 margin: const EdgeInsets.only(top: 5),
-                                child: Text('${videoModel.views} просмотров · 4 года назад',
+                                child: Text('${widget.videoModel.views} просмотров · 4 года назад',
                                   style: TextStyle(
                                     color: Provider.of<ThemeModel>(context, listen: false).isDark ? Colors.grey : Colors.grey[700],
                                     fontSize: 12
@@ -83,7 +121,7 @@ class SingleVideo extends StatelessWidget{
                       icon: const Icon(Icons.thumb_up_outlined),
                       onPressed: (){
                         var model = Provider.of<LikedModel>(context, listen: false);
-                        model.addLiked(videoModel);
+                        model.addLiked(widget.videoModel);
                       },
                     ),
                   ),
@@ -119,7 +157,7 @@ class SingleVideo extends StatelessWidget{
                                       Padding(
                                         padding: const EdgeInsets.only(bottom: 5.0),
                                         child: Text(
-                                          videoModel.chanel,
+                                          widget.videoModel.chanel,
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15
@@ -158,4 +196,21 @@ class SingleVideo extends StatelessWidget{
             )
       );
   }
+}
+
+class RedLine extends AnimatedWidget{
+  static final _widthTween = Tween<double>(begin: 1, end: 350);
+  const RedLine({Key? key, required animation}) : super(key: key, listenable: animation);
+
+  
+  @override
+  Widget build(BuildContext context) {
+    final animation = listenable as Animation<double>;
+    return Container(
+            width: _widthTween.evaluate(animation),
+            height: 3,
+            color: Colors.red
+          );
+  }
+
 }

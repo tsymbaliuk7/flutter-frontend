@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:youtube/models/liked.dart';
 import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
 

@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
  
   final List<GreyButton> buttonList = const <GreyButton>[GreyButton(text: 'Все'), GreyButton(text: 'Скетч-шоу'), GreyButton(text: 'Рэп'), GreyButton(text: 'Мультфильмы'), GreyButton(text: 'Футбол')];
   late List<Future<VideoModel>> modelsList;
+  
 
   @override
   void initState(){
@@ -31,8 +32,6 @@ class _HomePageState extends State<HomePage> {
       fetchJsonData(3, 'http://i3.ytimg.com/vi/xhbLwKQvIpw/maxresdefault.jpg'),
       fetchJsonData(4, 'http://i3.ytimg.com/vi/zw1V5T6q048/maxresdefault.jpg'),
       fetchJsonData(5, 'http://i3.ytimg.com/vi/ocxDfVk32Bs/maxresdefault.jpg'),
-      fetchJsonData(6, 'http://i3.ytimg.com/vi/pTJJsmejUOQ/maxresdefault.jpg'),
-      fetchJsonData(7, 'http://i3.ytimg.com/vi/1gDhl4leEzA/maxresdefault.jpg'),
     ];
   }
 
