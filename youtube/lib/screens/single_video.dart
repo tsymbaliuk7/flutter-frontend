@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:youtube/models/liked.dart';
 import 'package:youtube/models/theme_model.dart';
 import 'package:youtube/models/video_model.dart';
-
+import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 class SingleVideo extends StatefulWidget{
   final VideoModel videoModel;
@@ -60,7 +60,14 @@ class _SingleVideoState extends State<SingleVideo> with TickerProviderStateMixin
                     child: Row(children: [
                         Expanded(
                           child: Stack(children: [
-                            Image.network(widget.videoModel.imageLink),
+                            SimpleGestureDetector(
+                              child: Image.network(widget.videoModel.imageLink),
+                              onVerticalSwipe: (direction) {
+                                if (direction == SwipeDirection.down) {
+                                  Navigator.pop(context, true);
+                                } 
+                              }
+                              ),
                             Positioned(
                               child: RedLine(animation: curve,),
                               bottom: 0,

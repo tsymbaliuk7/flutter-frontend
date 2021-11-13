@@ -23,11 +23,10 @@ class YoutubeVideo extends StatefulWidget {
 
 class _YoutubeVideoState extends State<YoutubeVideo> with TickerProviderStateMixin {
   final _random = Random();
-
-
   late AnimationController controller;
   late Animation<double> curve;
   
+  bool isWatched = false;
   
   List<Curve> curves = [Curves.easeIn, Curves.easeInExpo, Curves.bounceIn, Curves.easeOutExpo, Curves.slowMiddle, Curves.linear, Curves.ease];
 
@@ -62,11 +61,14 @@ class _YoutubeVideoState extends State<YoutubeVideo> with TickerProviderStateMix
       builder: (BuildContext context, AsyncSnapshot<VideoModel> snapshot){ 
         if(snapshot.hasData){
           return GestureDetector(
-            onTap:  () {
+            onTap:  () async {
               widget.addFunction(snapshot.data ?? const VideoModel.empty());
-              Navigator.push(
+              var response = await Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SingleVideo(videoModel: snapshot.data ?? const VideoModel.empty())));
+              setState(() {
+                isWatched = response ?? isWatched;
+              });
             },
             child: Container(
                       margin: const EdgeInsets.only(bottom: 20),
@@ -78,6 +80,12 @@ class _YoutubeVideoState extends State<YoutubeVideo> with TickerProviderStateMix
                                 Expanded(child: 
                                 Stack(children: [
                                   Image.network(snapshot.data?.imageLink ?? ''),
+                                  Positioned(child: Container(
+                                    width: isWatched ? 400 : 0,
+                                    height: 3,
+                                    color: Colors.red
+                                  ),
+                                  bottom: 0,) ,
                                   Positioned(child: 
                                     Container(
                                       padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
